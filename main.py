@@ -1,5 +1,5 @@
 from utils.args import args
-from racetrack.board import Track
+from racetrack.track import Track
 
 
 def main():
