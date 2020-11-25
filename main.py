@@ -9,7 +9,10 @@ def main():
     # Parse arguments
     arguments = args()
 
-    board = Track()
+    kwargs = {
+        'track_name': arguments.track_name
+    }
+    board = Track(**kwargs)
 
     pass
 
