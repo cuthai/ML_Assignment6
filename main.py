@@ -1,5 +1,6 @@
 from utils.args import args
-from racetrack.track import Track
+from objects.track import Track
+from objects.car import Car
 
 
 def main():
@@ -12,7 +13,12 @@ def main():
     kwargs = {
         'track_name': arguments.track_name
     }
-    board = Track(**kwargs)
+    track = Track(**kwargs)
+
+    kwargs = {
+        'track': track
+    }
+    car = Car(**kwargs)
 
     pass
 

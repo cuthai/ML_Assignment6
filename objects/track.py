@@ -3,7 +3,7 @@ from random import choice
 
 class Track:
     """
-    Class track to keep track of the environment of the racetrack
+    Class track to keep track of the environment of the objects
 
     This class implements a board and has the ability to return the type of position given a tuple
     """
