@@ -7,7 +7,10 @@ class Car:
 
         self.start_position = self.track.get_start_position()
         self.position = self.start_position
+        self.track_position = track.get_track_position(self.position)
+
         self.last_position = self.position
+        self.last_track_position = track.get_track_position(self.last_position)
 
         self.time = 0
         self.speed = (0, 0)
