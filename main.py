@@ -5,7 +5,9 @@ from objects.car import Car
 
 def main():
     """
-    Main function to run Neural Network
+    Testing:
+        from random import randint
+        car.accelerate((randint(-1, 1), randint(-1, 1)))
     """
     # Parse arguments
     arguments = args()

@@ -37,8 +37,10 @@ class Car:
         self.acceleration = (acceleration_x, acceleration_y)
         self.acceleration_status = (acceleration_status_x, acceleration_status_y)
 
-        print(self.acceleration)
-        print(self.acceleration_status)
+        print(f'Acceleration: {self.acceleration}')
+        print(f'Status: {self.acceleration_status}')
+
+        self.update_speed()
 
     def check_acceleration_bounds(self, acceleration_value):
         if not self:
@@ -50,3 +52,24 @@ class Car:
             return -1
         else:
             return 0
+
+    def update_speed(self):
+        speed_x = self.speed[0]
+        speed_x += self.acceleration[0]
+
+        if speed_x > 5:
+            speed_x = 5
+        elif speed_x < -5:
+            speed_x = -5
+
+        speed_y = self.speed[1]
+        speed_y += self.acceleration[1]
+
+        if speed_y > 5:
+            speed_y = 5
+        elif speed_y < -5:
+            speed_y = -5
+
+        self.speed = (speed_x, speed_y)
+
+        print(f'Speed: {self.speed}')
