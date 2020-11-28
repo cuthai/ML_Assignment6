@@ -100,17 +100,17 @@ class Track:
         self.start_positions = start_positions
         self.finish_positions = finish_positions
 
-    def get_track_position(self, pos):
+    def get_track_position(self, position):
         """
         This function returns the track position of a specified tuple
 
         Args:
-            pos: tuple (int, int), the first int is for X/Rows, the second for Y/Columns on a matrix
+            position: tuple (int, int), the first int is for X/Rows, the second for Y/Columns on a matrix
 
         Returns:
             string: string, the character at that position
         """
-        return self.track[pos[0]][pos[1]]
+        return self.track[position[0]][position[1]]
 
     def get_start_position(self):
         """
@@ -121,10 +121,3 @@ class Track:
             tuple: tuple (int, int), randomly picked tuple location of a start position
         """
         return choice(self.start_positions)
-
-    def place_car(self, last_pos, last_track_pos, new_pos):
-        """
-        Test function. TODO: Remove
-        """
-        self.track[last_pos[0]][last_pos[1]] = last_track_pos
-        self.track[new_pos[0]][new_pos[1]] = 'C'
