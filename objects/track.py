@@ -121,3 +121,10 @@ class Track:
             tuple: tuple (int, int), randomly picked tuple location of a start position
         """
         return choice(self.start_positions)
+
+    def place_car(self, last_pos, last_track_pos, new_pos):
+        """
+        Test function. TODO: Remove
+        """
+        self.track[last_pos[0]][last_pos[1]] = last_track_pos
+        self.track[new_pos[0]][new_pos[1]] = 'C'

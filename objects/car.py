@@ -73,3 +73,26 @@ class Car:
         self.speed = (speed_x, speed_y)
 
         print(f'Speed: {self.speed}')
+
+        self.update_position()
+
+    def update_position(self):
+        self.last_position = self.position
+        self.last_track_position = self.track_position
+
+        position_x = self.position[0]
+        position_x += self.speed[0]
+
+        position_y = self.position[1]
+        position_y += self.speed[1]
+
+        new_position = (position_x, position_y)
+        new_track_position = self.track.get_track_position(new_position)
+
+        self.position = new_position
+        self.track_position = new_track_position
+        self.time += 1
+
+        self.track.place_car(self.last_position, self.last_track_position, new_position)
+        print(f'Position: {self.position}')
+        print(f'Track: {self.track_position}')
