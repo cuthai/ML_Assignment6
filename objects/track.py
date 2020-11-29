@@ -63,7 +63,7 @@ class Track:
         """
         This functions handles parsing the main data and reading that into a matrix for accessing using a tuple
         """
-        # Empty variables for holding the track, start positions, and finish positions
+        # Empty variables for holding the track, last_position positions, and finish positions
         track = []
         start_positions = []
         finish_positions = []
@@ -76,7 +76,7 @@ class Track:
 
             # Loop through the columns of the matrix
             for y_index in range(self.y):
-                # If this is a start position, save current (x_index, y_index)
+                # If this is a last_position position, save current (x_index, y_index)
                 if track_row[y_index] == 'S':
                     start_positions.append((x_index, y_index))
 
@@ -114,10 +114,10 @@ class Track:
 
     def get_start_position(self):
         """
-        This function returns a random start position for the track. There are multiple start positions so we return one
-            randomly
+        This function returns a random last_position position for the track. There are multiple last_position positions
+            so we return one randomly
 
         Returns:
-            tuple: tuple (int, int), randomly picked tuple location of a start position
+            tuple: tuple (int, int), randomly picked tuple location of a last_position position
         """
         return choice(self.start_positions)
