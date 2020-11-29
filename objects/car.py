@@ -3,8 +3,9 @@ from objects.bresenham import BresenhamPath
 
 
 class Car:
-    def __init__(self, track):
+    def __init__(self, track, reset_type='p'):
         self.track = track
+        self.reset_type = reset_type
 
         self.start_position = self.track.get_start_position()
         self.position = self.start_position
@@ -14,7 +15,7 @@ class Car:
         self.last_track_position = track.get_track_position(self.last_position)
 
         self.time = 0
-        self.speed = (0, 0)
+        self.velocity = (0, 0)
         self.acceleration = (0, 0)
         self.acceleration_status = (True, True)
 
@@ -22,7 +23,7 @@ class Car:
         acceleration_x = self.check_acceleration_bounds(acceleration[0])
         acceleration_status_x = True
 
-        if (acceleration_x * self.speed[0] >= 0) & acceleration_x != 0:
+        if (acceleration_x * self.velocity[0] >= 0) & acceleration_x != 0:
             if randint(0, 4) == 0:
                 acceleration_x = 0
                 acceleration_status_x = False
@@ -30,7 +31,7 @@ class Car:
         acceleration_y = self.check_acceleration_bounds(acceleration[1])
         acceleration_status_y = True
 
-        if (acceleration_y * self.speed[1] >= 0) & acceleration_y != 0:
+        if (acceleration_y * self.velocity[1] >= 0) & acceleration_y != 0:
             if randint(0, 4) == 0:
                 acceleration_y = 0
                 acceleration_status_y = False
@@ -42,7 +43,7 @@ class Car:
         print(f'Acceleration: {self.acceleration}')
         print(f'Status: {self.acceleration_status}')
 
-        self.update_speed()
+        self.update_velocity()
 
     def check_acceleration_bounds(self, acceleration_value):
         if not self:
@@ -55,26 +56,26 @@ class Car:
         else:
             return 0
 
-    def update_speed(self):
-        speed_x = self.speed[0]
-        speed_x += self.acceleration[0]
+    def update_velocity(self):
+        velocity_x = self.velocity[0]
+        velocity_x += self.acceleration[0]
 
-        if speed_x > 5:
-            speed_x = 5
-        elif speed_x < -5:
-            speed_x = -5
+        if velocity_x > 5:
+            velocity_x = 5
+        elif velocity_x < -5:
+            velocity_x = -5
 
-        speed_y = self.speed[1]
-        speed_y += self.acceleration[1]
+        velocity_y = self.velocity[1]
+        velocity_y += self.acceleration[1]
 
-        if speed_y > 5:
-            speed_y = 5
-        elif speed_y < -5:
-            speed_y = -5
+        if velocity_y > 5:
+            velocity_y = 5
+        elif velocity_y < -5:
+            velocity_y = -5
 
-        self.speed = (speed_x, speed_y)
+        self.velocity = (velocity_x, velocity_y)
 
-        print(f'Speed: {self.speed}')
+        print(f'Velocity: {self.velocity}')
 
         self.update_position()
 
@@ -83,10 +84,10 @@ class Car:
         self.last_track_position = self.track_position
 
         position_x = self.position[0]
-        position_x += self.speed[0]
+        position_x += self.velocity[0]
 
         position_y = self.position[1]
-        position_y += self.speed[1]
+        position_y += self.velocity[1]
 
         new_position = (position_x, position_y)
         new_track_position = self.track.get_track_position(new_position)
@@ -94,9 +95,13 @@ class Car:
         flag_crashed, flag_finished = self.check_movement(new_position)
         print(f'Crashed: {flag_crashed}, Finished: {flag_finished}')
 
-        self.position = new_position
-        self.track_position = new_track_position
         self.time += 1
+        if flag_finished:
+            return True
+        elif flag_crashed:
+            self.reset()
+        else:
+            self.move(new_position, new_track_position)
 
         print(f'Position: {self.position}')
         print(f'Track: {self.track_position}')
@@ -125,3 +130,14 @@ class Car:
                 return flag_crashed, flag_finished
 
         return flag_crashed, flag_finished
+
+    def reset(self):
+        if self.reset_type == 's':
+            self.velocity = (0, 0)
+            self.position = self.start_position
+        else:
+            self.velocity = (0, 0)
+
+    def move(self, new_position, new_track_position):
+        self.position = new_position
+        self.track_position = new_track_position
