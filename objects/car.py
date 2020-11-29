@@ -312,3 +312,12 @@ class Car:
             flag_finished: Boolean, car's current finished status
         """
         return self.flag_finished
+
+    def get_time(self):
+        """
+        This function returns the car's current time, for the cost function
+
+        Returns:
+           time: int, time the car has been driving
+        """
+        return self.time
