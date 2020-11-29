@@ -26,27 +26,6 @@ def main():
     }
     car = Car(**kwargs)
 
-    car.accelerate((-1, 0))
-    car.accelerate((-1, 0))
-    car.accelerate((-1, 0))
-    car.accelerate((-1, 0))
-    car.accelerate((-1, 0))
-
-    car.accelerate((1, 1))
-    car.accelerate((1, 1))
-    car.accelerate((1, 1))
-    car.accelerate((1, 1))
-    car.accelerate((1, 1))
-
-    car.accelerate((-1, -1))
-    car.accelerate((-1, -1))
-    car.accelerate((-1, -1))
-    car.accelerate((0, 0))
-    car.accelerate((0, 0))
-
-    car.accelerate((-1, 1))
-    car.accelerate((-1, 1))
-
     pass
 
 

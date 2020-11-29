@@ -98,10 +98,10 @@ class Car:
         self.time += 1
         print(f'Time: {self.time}')
         if flag_finished:
-            print('FINISHED')
+            print('DONE')
             return True
         elif flag_crashed:
-            print('CRASHED')
+            print('RESET')
             self.reset()
         else:
             self.move(new_position, new_track_position)

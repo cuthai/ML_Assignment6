@@ -60,23 +60,55 @@ def bresenham_path_test():
 
 
 def car_test(car):
+    # This finishes on random seed 1
+    # Up the leg
     car.accelerate((-1, 0))
     car.accelerate((-1, 0))
     car.accelerate((-1, 0))
     car.accelerate((-1, 0))
     car.accelerate((-1, 0))
-
-    car.accelerate((1, 1))
-    car.accelerate((1, 1))
-    car.accelerate((1, 1))
-    car.accelerate((1, 1))
-    car.accelerate((1, 1))
-
-    car.accelerate((-1, -1))
-    car.accelerate((-1, -1))
-    car.accelerate((-1, -1))
+    car.accelerate((0, 0))
     car.accelerate((0, 0))
     car.accelerate((0, 0))
 
+    # First Curve
+    car.accelerate((0, 1))
+    car.accelerate((1, 1))
+    car.accelerate((1, 1))
+    car.accelerate((1, 1))
+    car.accelerate((0, 0))
+
+    # Around the head
+    car.accelerate((1, -1))
+    car.accelerate((1, -1))
+    car.accelerate((0, -1))
+    car.accelerate((0, -1))
+
+    # Around Corner 2
+    car.accelerate((-1, -1))
+    car.accelerate((1, -1))
+    car.accelerate((-1, -1))
+    car.accelerate((1, 1))
+    car.accelerate((1, -1))
+    car.accelerate((1, 0))
+
+    # Around Corner 3 (the bend)
     car.accelerate((-1, 1))
     car.accelerate((-1, 1))
+    car.accelerate((0, 1))
+    car.accelerate((1, -1))
+    car.accelerate((1, 1))
+    car.accelerate((0, 1))
+    car.accelerate((-1, 1))
+    car.accelerate((0, 1))
+    car.accelerate((1, 0))
+    car.accelerate((1, 0))
+
+    # Around Corner 4 to finish
+    car.accelerate((1, 1))
+    car.accelerate((-1, 1))
+    car.accelerate((-1, 1))
+    car.accelerate((1, -1))
+    car.accelerate((1, -1))
+    car.accelerate((1, -1))
+    car.accelerate((1, -1))
