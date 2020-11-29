@@ -25,17 +25,6 @@ def main():
     }
     car = Car(**kwargs)
 
-    car.accelerate((-1, 0))
-    car.accelerate((-1, 0))
-    car.accelerate((-1, 0))
-    car.accelerate((-1, 0))
-    car.accelerate((-1, 0))
-    car.accelerate((1, 1))
-    car.accelerate((1, 1))
-    car.accelerate((1, 1))
-    car.accelerate((1, 1))
-    car.accelerate((1, 1))
-
     pass
 
 
@@ -91,5 +80,10 @@ if __name__ == '__main__':
     # BresenhamPath((5, 5), (0, 5)).get_positions()
     # BresenhamPath((5, 5), (10, 10)).get_positions()
     # BresenhamPath((5, 5), (0, 10)).get_positions()
+    # BresenhamPath((10, 5), (5, 0)).get_positions()
     # BresenhamPath((5, 5), (10, 0)).get_positions()
-
+    #
+    # BresenhamPath((0, 0), (1, 0)).get_positions()
+    # BresenhamPath((1, 0), (0, 0)).get_positions()
+    # BresenhamPath((0, 0), (0, 1)).get_positions()
+    # BresenhamPath((0, 1), (0, 0)).get_positions()
