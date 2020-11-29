@@ -9,7 +9,8 @@ class BresenhamPath:
     def __init__(self, last_position, new_position):
         """
         Init function, takes two positional tuples determines the slope between them and then adds a list of the
-            positional tuples between them to this object
+            positional tuples between them to this object. There are 6 Bresenham's Line Generation to choose from
+            depending on the magnitude and direction of the slope
 
         Args:
             last_position: tuple (int, int), starting position before movement
@@ -48,10 +49,10 @@ class BresenhamPath:
             self.positions = self.calculate_bresenhams_algorithm_4()
 
         # Edge cases
-        # Slope is diagonal positive
+        # Slope is positive x = y
         elif slope == 1:
             self.positions = self.calculate_bresenhams_algorithm_5()
-        # Slope is diagonal negative
+        # Slope is negative x = y
         elif slope == -1:
             self.positions = self.calculate_bresenhams_algorithm_6()
 
