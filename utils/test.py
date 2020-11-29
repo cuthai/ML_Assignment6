@@ -60,7 +60,7 @@ def bresenham_path_test():
 
 
 def car_test(car):
-    # This finishes on random seed 1
+    # This finishes on random seed 1 on time 40
     # Up the leg
     car.accelerate((-1, 0))
     car.accelerate((-1, 0))
