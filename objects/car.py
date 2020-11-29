@@ -1,4 +1,5 @@
 from random import randint
+from objects.bresenham import BresenhamPath
 
 
 class Car:
@@ -37,6 +38,7 @@ class Car:
         self.acceleration = (acceleration_x, acceleration_y)
         self.acceleration_status = (acceleration_status_x, acceleration_status_y)
 
+        print('-------------')
         print(f'Acceleration: {self.acceleration}')
         print(f'Status: {self.acceleration_status}')
 
@@ -89,10 +91,37 @@ class Car:
         new_position = (position_x, position_y)
         new_track_position = self.track.get_track_position(new_position)
 
+        flag_crashed, flag_finished = self.check_movement(new_position)
+        print(f'Crashed: {flag_crashed}, Finished: {flag_finished}')
+
         self.position = new_position
         self.track_position = new_track_position
         self.time += 1
 
-        self.track.place_car(self.last_position, self.last_track_position, new_position)
         print(f'Position: {self.position}')
         print(f'Track: {self.track_position}')
+
+    def check_movement(self, new_position):
+        flag_crashed = False
+        flag_finished = False
+
+        track_types = []
+
+        bresenham_path = BresenhamPath(self.last_position, new_position)
+
+        for position in bresenham_path.get_positions():
+            track_types.append(self.track.get_track_position(position))
+        print(f'Track Types: {track_types}')
+
+        for track_type in track_types:
+            if track_type == '#':
+                flag_crashed = True
+
+                return flag_crashed, flag_finished
+
+            elif track_type == 'F':
+                flag_finished = True
+
+                return flag_crashed, flag_finished
+
+        return flag_crashed, flag_finished
