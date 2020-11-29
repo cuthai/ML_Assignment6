@@ -14,7 +14,7 @@ class BresenhamPath:
 
         Args:
             last_position: tuple (int, int), starting position before movement
-            new_position: tuple (int, int), end position after applying speed changes
+            new_position: tuple (int, int), end position after applying velocity changes
         """
         # Save last and new
         self.last_position = last_position
