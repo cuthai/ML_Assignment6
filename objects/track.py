@@ -110,7 +110,12 @@ class Track:
         Returns:
             string: string, the character at that position
         """
-        return self.track[position[0]][position[1]]
+        # Retrieve track
+        try:
+            return self.track[position[0]][position[1]]
+        # If out of bounds, return a # to denote a crash
+        except IndexError:
+            return '#'
 
     def get_start_position(self):
         """
