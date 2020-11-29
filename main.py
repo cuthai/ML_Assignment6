@@ -1,25 +1,26 @@
 from utils.args import args
 from objects.track import Track
 from objects.car import Car
+from random import seed
 
 
 def main():
     """
-    Testing:
-        from random import randint
-        car.accelerate((randint(-1, 1), randint(-1, 1)))
-
-        from objects.bresenham import BresenhamPath
-        BresenhamPath((0, 0), (5, 5)).get_positions()
     """
     # Parse arguments
     arguments = args()
 
+    # Set seed
+    seed(arguments.random_seed)
+
+    # Create Track
     kwargs = {
-        'track_name': arguments.track_name
+        'track_name': arguments.track_name,
+        'reset_type': arguments.reset_type
     }
     track = Track(**kwargs)
 
+    # Create Car
     kwargs = {
         'track': track
     }

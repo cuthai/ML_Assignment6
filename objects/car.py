@@ -3,7 +3,7 @@ from objects.bresenham import BresenhamPath
 
 
 class Car:
-    def __init__(self, track, reset_type='p'):
+    def __init__(self, track, reset_type='S'):
         self.track = track
         self.reset_type = reset_type
 
@@ -96,6 +96,7 @@ class Car:
         print(f'Crashed: {flag_crashed}, Finished: {flag_finished}')
 
         self.time += 1
+        print(f'Time: {self.time}')
         if flag_finished:
             print('FINISHED')
             return True
@@ -135,7 +136,7 @@ class Car:
         return flag_crashed, flag_finished
 
     def reset(self):
-        if self.reset_type == 's':
+        if self.reset_type == 'R':
             self.velocity = (0, 0)
             self.position = self.start_position
         else:
