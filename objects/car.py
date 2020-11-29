@@ -97,8 +97,10 @@ class Car:
 
         self.time += 1
         if flag_finished:
+            print('FINISHED')
             return True
         elif flag_crashed:
+            print('CRASHED')
             self.reset()
         else:
             self.move(new_position, new_track_position)
@@ -112,9 +114,10 @@ class Car:
 
         track_types = []
 
-        bresenham_path = BresenhamPath(self.last_position, new_position)
+        positions = BresenhamPath(self.last_position, new_position).get_positions()
 
-        for position in bresenham_path.get_positions():
+        print(f'Positions: {positions}')
+        for position in positions:
             track_types.append(self.track.get_track_position(position))
         print(f'Track Types: {track_types}')
 

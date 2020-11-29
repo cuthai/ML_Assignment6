@@ -327,5 +327,4 @@ class BresenhamPath:
         Returns:
             track_positions: list tuple (int, int), a list of the track positions passed through
         """
-        print(f'Positions: {self.positions}')
         return self.positions
