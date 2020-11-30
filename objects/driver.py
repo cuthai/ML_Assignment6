@@ -21,6 +21,8 @@ class Driver:
 
         self.position = None
 
+        self.value_iteration()
+
     def value_iteration(self):
         flag_convergence = False
         convergence_value_new = 0
