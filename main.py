@@ -1,6 +1,7 @@
 from utils.args import args
 from objects.track import Track
 from objects.car import Car
+from objects.driver import Driver
 from random import seed
 
 
@@ -25,6 +26,12 @@ def main():
         'reset_type': arguments.reset_type
     }
     car = Car(**kwargs)
+
+    # Create Driver
+    kwargs = {
+        'car': car
+    }
+    driver = Driver(**kwargs)
 
     pass
 
