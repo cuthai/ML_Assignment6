@@ -17,6 +17,10 @@ def args():
             Reset type for crash, S = stop, R = reset. Please use: 'S', 'R'. Capitalization matters
             <S> stop, resets velocity, increases time, but doesn't move car
             <R> reset, resets velocity, increases time, moves car back to start
+        -bt <char>, --brain_type <char>
+            Learning type, Q = QLearning, S = SARSA. Please use: 'Q', 'S'. Capitalization matters
+            <Q> QLearning
+            <S> SARSA
     """
     # Initialize the parser
     parser = argparse.ArgumentParser()
@@ -28,6 +32,8 @@ def args():
                         help="Track letter to use as the track. Please use: 'R', 'O', or 'L'. Capitalization matters")
     parser.add_argument('-rt', '--reset_type', type=str,
                         help="Reset type for crash, S = stop, R = reset. Please use: 'S', 'R'. Capitalization matters")
+    parser.add_argument('-bt', '--brain_type', type=str,
+                        help="Learning type, Q = QLearning, S = SARSA. Please use: 'Q', 'S'. Capitalization matters")
 
     # Parse arguments
     command_args = parser.parse_args()
