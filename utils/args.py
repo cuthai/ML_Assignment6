@@ -34,13 +34,13 @@ def args():
                         help="Set a random seed for testing, seeds the rate of failed accelerations")
     parser.add_argument('-t', '--track_name', type=str,
                         help="Track letter to use as the track. Please use: 'R', 'O', or 'L'. Capitalization matters")
-    parser.add_argument('-rt', '--reset_type', type=str,
+    parser.add_argument('-rt', '--reset_type', type=str, default='S',
                         help="Reset type for crash, S = stop, R = reset. Please use: 'S', 'R'. Capitalization matters")
-    parser.add_argument('-bt', '--brain_type', type=str,
+    parser.add_argument('-bt', '--brain_type', type=str, default='Q',
                         help="Learning type, Q = QLearning, S = SARSA. Please use: 'Q', 'S'. Capitalization matters")
-    parser.add_argument('-dr', '--discount_rate', type=float,
+    parser.add_argument('-dr', '--discount_rate', type=float, default=.9,
                         help="Discount rate in Bellman's equation for value iteration")
-    parser.add_argument('-cd', '--convergence_delta', type=float,
+    parser.add_argument('-cd', '--convergence_delta', type=float, default=.001,
                         help="Convergence delta for value iteration")
 
     # Parse arguments

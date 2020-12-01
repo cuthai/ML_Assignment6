@@ -9,7 +9,7 @@ class Driver:
     This class implements a value iteration algorithm for determining the best track positions. It also calls to the
         QLearning or SARSA algorithms in order to make use of driving around the track.
     """
-    def __init__(self, car, brain_type='Q', discount_rate=.9, convergence_delta=.01):
+    def __init__(self, car, brain_type='Q', discount_rate=.9, convergence_delta=.001):
         """
         Init Function. The brain_type is used to implement one of the two reinforcement learning algorithms. The
             discount_rate is used during value iteration to discount the cost of movement along the track. The

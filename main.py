@@ -29,7 +29,10 @@ def main():
 
     # Create Driver
     kwargs = {
-        'car': car
+        'car': car,
+        'brain_type': arguments.brain_type,
+        'discount_rate': arguments.discount_rate,
+        'convergence_delta': arguments.convergence_delta
     }
     driver = Driver(**kwargs)
 
