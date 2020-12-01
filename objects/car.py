@@ -21,8 +21,13 @@ class Car:
         # Track
         self.track = track
 
-        # Car meta variables
-        self.reset_type = reset_type
+        # Car meta variables - reset type
+        if reset_type not in ['S', 'R']:
+            raise ValueError("Car Reset type not found, Please specify 'S' or 'R'")
+        else:
+            self.reset_type = reset_type
+
+        # Car meta variables - flag finished
         self.flag_finished = False
 
         # Position variables for start and current. Resets to start if reset is 'R'

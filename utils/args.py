@@ -21,6 +21,10 @@ def args():
             Learning type, Q = QLearning, S = SARSA. Please use: 'Q', 'S'. Capitalization matters
             <Q> QLearning
             <S> SARSA
+        -dr <float>, --discount_rate <float>
+            Discount rate in Bellman's equation for value iteration
+        -cd <float>, --convergence_delta <float>
+            Convergence delta for value iteration
     """
     # Initialize the parser
     parser = argparse.ArgumentParser()
@@ -34,6 +38,10 @@ def args():
                         help="Reset type for crash, S = stop, R = reset. Please use: 'S', 'R'. Capitalization matters")
     parser.add_argument('-bt', '--brain_type', type=str,
                         help="Learning type, Q = QLearning, S = SARSA. Please use: 'Q', 'S'. Capitalization matters")
+    parser.add_argument('-dr', '--discount_rate', type=float,
+                        help="Discount rate in Bellman's equation for value iteration")
+    parser.add_argument('-cd', '--convergence_delta', type=float,
+                        help="Convergence delta for value iteration")
 
     # Parse arguments
     command_args = parser.parse_args()
