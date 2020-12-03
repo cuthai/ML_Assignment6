@@ -235,7 +235,9 @@ class Car:
         """
         # Initial flag status
         flag_crashed = False
+        flag_double_crashed = False
         flag_finished = False
+        flag_start = False
 
         # Variable for storing the track types passed over
         track_types = []
@@ -249,12 +251,22 @@ class Car:
             # Retrieve the track type for each position
             track_type = self.track.get_track_position(position)
 
+            # Flag for start to prevent finishes from the starting line, for the O track
+            if track_type == 'S':
+                flag_start = True
+                flag_finished = False
+
+            # Flag for double crash, this prevents the R track from jumping around the y bound
+            elif track_type == '#' and flag_crashed:
+                flag_double_crashed = True
+                flag_finished = False
+
             # Flag for crash
-            if track_type == '#':
+            elif track_type == '#':
                 flag_crashed = True
 
             # Flag for finish
-            elif track_type == 'F':
+            elif track_type == 'F' and not flag_start and not flag_double_crashed:
                 flag_finished = True
 
             # Save the track type, for debugging
