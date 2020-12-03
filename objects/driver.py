@@ -1,5 +1,7 @@
 from objects.q_learning import QLearningBrain
 from objects.sarsa import SARSABrain
+from math import exp
+from random import choices
 
 
 class Driver:
@@ -117,3 +119,79 @@ class Driver:
             # If not converged, set our old to new and continue
             else:
                 convergence_value_old = convergence_value_new
+
+    def accelerate_car(self):
+        position = self.car.get_position()
+        position_x = position[0]
+        position_y = position[1]
+
+        velocity = self.car.get_velocity()
+        velocity_x = velocity[0]
+        velocity_y = velocity[1]
+
+        rewards = {x: {y: 0 for y in [-1, 0, 1]} for x in [-1, 0, 1]}
+        total_rewards = 0
+        max_reward = -1000
+
+        for acceleration_x in rewards.keys():
+            new_position_x = position_x + velocity_x + acceleration_x
+
+            for acceleration_y in rewards[acceleration_x].keys():
+                new_position_y = position_y + velocity_y + acceleration_y
+
+                try:
+                    reward = self.values[new_position_x][new_position_y]
+                except IndexError:
+                    reward = -1000
+
+                rewards[acceleration_x][acceleration_y] = reward
+                if reward > -1000:
+                    total_rewards += exp(reward)
+
+                if reward > max_reward:
+                    max_reward = reward
+
+        probabilities = []
+
+        for acceleration_x in rewards.keys():
+            for acceleration_y in rewards[acceleration_x].keys():
+                if total_rewards == 0:
+                    total_rewards = -1000
+
+                probabilities.append(exp(rewards[acceleration_x][acceleration_y]) / total_rewards)
+
+        choice = choices(range(9), probabilities)[0]
+
+        chosen_action = self.convert_choice(choice)
+
+        self.car.accelerate(chosen_action)
+
+        self.q_learning(position, max_reward)
+
+    def convert_choice(self, choice):
+        if not self:
+            raise NotImplementedError
+
+        if choice == 0:
+            return -1, -1
+        elif choice == 1:
+            return -1, 0
+        elif choice == 2:
+            return -1, 1
+
+        elif choice == 3:
+            return 0, -1
+        elif choice == 4:
+            return 0, 0
+        elif choice == 5:
+            return 0, 1
+
+        elif choice == 6:
+            return 1, -1
+        elif choice == 7:
+            return 1, 0
+        elif choice == 8:
+            return 1, 1
+
+    def q_learning(self, position, max_reward):
+        self.values[position[0]][position[1]] += .9 * (max_reward - self.values[position[0]][position[1]])

@@ -36,6 +36,9 @@ def main():
     }
     driver = Driver(**kwargs)
 
+    while not car.get_finish():
+        driver.accelerate_car()
+
     pass
 
 
