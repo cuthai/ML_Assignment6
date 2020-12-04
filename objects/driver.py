@@ -121,57 +121,93 @@ class Driver:
                 convergence_value_old = convergence_value_new
 
     def accelerate_car(self):
+        """
+        This function interacts with the car by calling to the car accelerate function. The chosen acceleration is
+            chosen using an E-Greedy algorithm. The E-Greedy algorithm uses a softmax of the reward for each action
+            against the total reward. After actions, values are updated using a QLearning algorithm.
+        """
+        # Grab position variables
         position = self.car.get_position()
         position_x = position[0]
         position_y = position[1]
 
+        # Grab velocity variables
         velocity = self.car.get_velocity()
         velocity_x = velocity[0]
         velocity_y = velocity[1]
 
+        # Starting variables for rewards
         rewards = {x: {y: 0 for y in [-1, 0, 1]} for x in [-1, 0, 1]}
         total_rewards = 0
         max_reward = -1000
 
+        # Loop through each possible acceleration x
         for acceleration_x in rewards.keys():
+            # Calculate the new position based on the current position, velocity, and acceleration
             new_position_x = position_x + velocity_x + acceleration_x
 
+            # Loop through each possible acceleration y
             for acceleration_y in rewards[acceleration_x].keys():
+                # Calculate the new position based on the current position, velocity, and acceleration
                 new_position_y = position_y + velocity_y + acceleration_y
 
+                # Try grabbing the reward for moving to that position
                 try:
                     reward = self.values[new_position_x][new_position_y]
+                # If there is an index error, we are out of bounds. Set the reward to that as -1000
                 except IndexError:
                     reward = -1000
 
+                # Grab the reward for moving to there
                 rewards[acceleration_x][acceleration_y] = reward
+
+                # Only add the reward to total_reward if it's > -1000, we don't want to move there
                 if reward > -1000:
                     total_rewards += exp(reward)
 
+                # Keep track of our optimal reward
                 if reward > max_reward:
                     max_reward = reward
 
+        # Start variable for probabilities
         probabilities = []
 
+        # Loop through the possible x and y acceleration
         for acceleration_x in rewards.keys():
             for acceleration_y in rewards[acceleration_x].keys():
+                # If total_rewards is 0, then we have gone out of bounds
                 if total_rewards == 0:
                     total_rewards = -1000
 
+                # Softmax calculation, if out of bounds or crashed, it will turn to 0%
                 probabilities.append(exp(rewards[acceleration_x][acceleration_y]) / total_rewards)
 
+        # Sample a single choice based on the probabilities calculated above
         choice = choices(range(9), probabilities)[0]
 
+        # The choice is not a tuple, call to convert_choice in order to convert it
         chosen_action = self.convert_choice(choice)
 
+        # Use the chosen action to accelerate
         self.car.accelerate(chosen_action)
 
+        # Trigger q_learning based on the optimal action
         self.q_learning(position, max_reward)
 
     def convert_choice(self, choice):
+        """
+        This function convert the choice received into a tuple. The choice is an int from range 0-8 inclusive.
+
+        Args:
+            choice: int, choice picked during the accelerate_car function
+
+        Returns:
+            chosen_action: tuple (int, int), represents the input to the car acceleration
+        """
         if not self:
             raise NotImplementedError
 
+        # Accelerate x = -1
         if choice == 0:
             return -1, -1
         elif choice == 1:
@@ -179,6 +215,7 @@ class Driver:
         elif choice == 2:
             return -1, 1
 
+        # Accelerate x = 0
         elif choice == 3:
             return 0, -1
         elif choice == 4:
@@ -186,6 +223,7 @@ class Driver:
         elif choice == 5:
             return 0, 1
 
+        # Accelerate x = 1
         elif choice == 6:
             return 1, -1
         elif choice == 7:
@@ -194,4 +232,11 @@ class Driver:
             return 1, 1
 
     def q_learning(self, position, max_reward):
+        """
+        Function for updating the value matrix using the q_learning function
+
+        Args:
+            position: tuple (int, int), represents the car current location to update the value
+            max_reward: float, value of the optimal reward at the position above
+        """
         self.values[position[0]][position[1]] += .9 * (max_reward - self.values[position[0]][position[1]])
