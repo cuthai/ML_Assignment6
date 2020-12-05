@@ -32,14 +32,13 @@ def main():
         'car': car,
         'brain_type': arguments.brain_type,
         'discount_rate': arguments.discount_rate,
-        'convergence_delta': arguments.convergence_delta
+        'convergence_delta': arguments.convergence_delta,
+        'learning_rate': arguments.learning_rate
     }
     driver = Driver(**kwargs)
 
     while not car.get_finish():
         driver.accelerate_car()
-
-    pass
 
 
 if __name__ == '__main__':

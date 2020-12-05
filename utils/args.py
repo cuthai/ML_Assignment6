@@ -42,6 +42,8 @@ def args():
                         help="Discount rate in Bellman's equation for value iteration")
     parser.add_argument('-cd', '--convergence_delta', type=float, default=.001,
                         help="Convergence delta for value iteration")
+    parser.add_argument('-lr', '--learning_rate', type=float, default=.001,
+                        help="Learning rate of value update from QLearning and SARSA")
 
     # Parse arguments
     command_args = parser.parse_args()

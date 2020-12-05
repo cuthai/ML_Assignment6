@@ -1,5 +1,3 @@
-from objects.q_learning import QLearningBrain
-from objects.sarsa import SARSABrain
 from math import exp
 from random import choices
 
@@ -11,7 +9,7 @@ class Driver:
     This class implements a value iteration algorithm for determining the best track positions. It also calls to the
         QLearning or SARSA algorithms in order to make use of driving around the track.
     """
-    def __init__(self, car, brain_type='Q', discount_rate=.9, convergence_delta=.001):
+    def __init__(self, car, brain_type='Q', discount_rate=.9, convergence_delta=.001, learning_rate=.9):
         """
         Init Function. The brain_type is used to implement one of the two reinforcement learning algorithms. The
             discount_rate is used during value iteration to discount the cost of movement along the track. The
@@ -22,14 +20,14 @@ class Driver:
             brain_type: char, reinforcement learning algorithm to use. Use 'Q' for QLearning and 'S' for SARSA
             discount_rate: float, rate at which value iteration is discounted as time goes up
             convergence_delta: float, threshold to stop value iteration
+            learning_rate: float, rate to learn using QLearning or SARSA
         """
-        # Brain type determination
-        if brain_type == 'Q':
-            self.brain = QLearningBrain()
-        elif brain_type == 'S':
-            self.brain = SARSABrain()
-        else:
+        # Brain type determination and variables
+        if brain_type not in ['Q', 'S']:
             raise ValueError("Brain_Type not found, please specify 'Q' or 'S'")
+        else:
+            self.brain_type = brain_type
+        self.learning_rate = learning_rate
 
         # Value iteration variables
         self.discount_rate = discount_rate
@@ -187,12 +185,16 @@ class Driver:
 
         # The choice is not a tuple, call to convert_choice in order to convert it
         chosen_action = self.convert_choice(choice)
+        reward = rewards[chosen_action[0]][chosen_action[1]]
 
         # Use the chosen action to accelerate
         self.car.accelerate(chosen_action)
 
         # Trigger q_learning based on the optimal action
-        self.q_learning(position, max_reward)
+        if self.brain_type == 'Q':
+            self.q_learning(position, max_reward)
+        else:
+            self.sarsa(position, reward)
 
     def convert_choice(self, choice):
         """
@@ -239,4 +241,16 @@ class Driver:
             position: tuple (int, int), represents the car current location to update the value
             max_reward: float, value of the optimal reward at the position above
         """
-        self.values[position[0]][position[1]] += .9 * (max_reward - self.values[position[0]][position[1]])
+        self.values[position[0]][position[1]] += self.learning_rate * \
+                                                 (max_reward - self.values[position[0]][position[1]])
+
+    def sarsa(self, position, prime_reward):
+        """
+        Function for updating the value matrix using the SARSA function
+
+        Args:
+            position: tuple (int, int), represents the car current location to update the value
+            prime_reward: float, value of the movement at the new position
+        """
+        self.values[position[0]][position[1]] += self.learning_rate * \
+                                                 (prime_reward - self.values[position[0]][position[1]])
