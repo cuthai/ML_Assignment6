@@ -263,9 +263,9 @@ class Driver:
             brain_type = 'SARSA'
 
         if self.reset_type == 'S':
-            reset_type = 'StopReset'
+            reset_type = 'Stop_Reset'
         else:
-            reset_type = 'StartReset'
+            reset_type = 'Start_Reset'
 
         csv_row = ','.join([str(seed), self.track.track_name, reset_type, brain_type, str(self.learning_rate),
                             str(self.car.time)])
