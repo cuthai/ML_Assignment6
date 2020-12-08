@@ -54,7 +54,7 @@ class Driver:
         Value iteration function
 
         This function looks at the track and determines the value of moving to each position based on the Bellman's
-            equation with respect to the finish line. Walls on the tracks are given a -1000 value. The value matrix
+            equation with respect to the finish line. Walls on the tracks are given a -100 value. The value matrix
             is then saved as part of the driver's value attribute
         """
         # Initial variables to check for convergence.
@@ -75,14 +75,14 @@ class Driver:
                     if track_position == 'F':
                         self.values[x][y] = 0
 
-                    # Walls get a value of -1000
+                    # Walls get a value of -100
                     elif track_position == '#':
-                        self.values[x][y] = -1000
+                        self.values[x][y] = -100
 
                     # Otherwise determine the value
                     else:
-                        # Our initial max_value is -1000, we are check for the best action value
-                        max_value = -1000
+                        # Our initial max_value is -100, we are check for the best action value
+                        max_value = -100
 
                         # Loop through all possible x and y actions
                         for x_action in [-1, 0, 1]:
@@ -92,9 +92,9 @@ class Driver:
                                 x_move = x + x_action
                                 y_move = y + y_action
 
-                                # For out of bounds, set to -1000
+                                # For out of bounds, set to -100
                                 if (x_move < 0) | (x_move >= self.x) | (y_move < 0) | (y_move >= self.y):
-                                    value = -1000
+                                    value = -100
 
                                 # Otherwise, subtract -1 and add the value of that next move
                                 else:
@@ -138,7 +138,7 @@ class Driver:
         # Starting variables for rewards
         rewards = {x: {y: 0 for y in [-1, 0, 1]} for x in [-1, 0, 1]}
         total_rewards = 0
-        max_reward = -1000
+        max_reward = -100
 
         # Loop through each possible acceleration x
         for acceleration_x in rewards.keys():
@@ -153,15 +153,15 @@ class Driver:
                 # Try grabbing the reward for moving to that position
                 try:
                     reward = self.values[new_position_x][new_position_y]
-                # If there is an index error, we are out of bounds. Set the reward to that as -1000
+                # If there is an index error, we are out of bounds. Set the reward to that as -100
                 except IndexError:
-                    reward = -1000
+                    reward = -100
 
                 # Grab the reward for moving to there
                 rewards[acceleration_x][acceleration_y] = reward
 
-                # Only add the reward to total_reward if it's > -1000, we don't want to move there
-                if reward > -1000:
+                # Only add the reward to total_reward if it's > -100, we don't want to move there
+                if reward > -100:
                     total_rewards += exp(reward)
 
                 # Keep track of our optimal reward
@@ -176,7 +176,7 @@ class Driver:
             for acceleration_y in rewards[acceleration_x].keys():
                 # If total_rewards is 0, then we have gone out of bounds
                 if total_rewards == 0:
-                    total_rewards = -1000
+                    total_rewards = -100
 
                 # Softmax calculation, if out of bounds or crashed, it will turn to 0%
                 probabilities.append(exp(rewards[acceleration_x][acceleration_y]) / total_rewards)
