@@ -12,7 +12,8 @@ def main():
     arguments = args()
 
     # Set seed
-    seed(arguments.random_seed)
+    if arguments.random_seed:
+        seed(arguments.random_seed)
 
     # Create Track
     kwargs = {
@@ -39,6 +40,8 @@ def main():
 
     while not car.get_finish():
         driver.accelerate_car()
+
+    driver.summarize(arguments.random_seed)
 
 
 if __name__ == '__main__':
