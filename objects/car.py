@@ -328,6 +328,8 @@ class Car:
         Returns:
             flag_finished: Boolean, car's current finished status
         """
+        if self.time > 200000:
+            return True
         return self.flag_finished
 
     def get_time(self):
