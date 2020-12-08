@@ -36,6 +36,7 @@ class Driver:
         # Car Info
         self.car = car
         self.position = None
+        self.reset_type = self.car.reset_type
 
         # Track Info
         self.track = car.track
@@ -254,3 +255,21 @@ class Driver:
         """
         self.values[position[0]][position[1]] += self.learning_rate * \
                                                  (prime_reward - self.values[position[0]][position[1]])
+
+    def summarize(self, seed):
+        if self.brain_type == 'Q':
+            brain_type = 'QLearning'
+        else:
+            brain_type = 'SARSA'
+
+        if self.reset_type == 'S':
+            reset_type = 'StopReset'
+        else:
+            reset_type = 'StartReset'
+
+        csv_row = ','.join([str(seed), self.track.track_name, reset_type, brain_type, str(self.learning_rate),
+                            str(self.car.time)])
+        csv_row += '\n'
+
+        with open(f'output\\data.csv', 'a') as file:
+            file.write(csv_row)

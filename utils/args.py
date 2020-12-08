@@ -30,7 +30,7 @@ def args():
     parser = argparse.ArgumentParser()
 
     # Add arguments
-    parser.add_argument('-rs', '--random_seed', type=int, default=1,
+    parser.add_argument('-rs', '--random_seed', type=int,
                         help="Set a random seed for testing, seeds the rate of failed accelerations")
     parser.add_argument('-t', '--track_name', type=str,
                         help="Track letter to use as the track. Please use: 'R', 'O', or 'L'. Capitalization matters")
@@ -42,7 +42,7 @@ def args():
                         help="Discount rate in Bellman's equation for value iteration")
     parser.add_argument('-cd', '--convergence_delta', type=float, default=.001,
                         help="Convergence delta for value iteration")
-    parser.add_argument('-lr', '--learning_rate', type=float, default=.9,
+    parser.add_argument('-lr', '--learning_rate', type=float, default=.01,
                         help="Learning rate of value update from QLearning and SARSA")
 
     # Parse arguments
