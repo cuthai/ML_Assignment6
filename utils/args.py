@@ -25,6 +25,8 @@ def args():
             Discount rate in Bellman's equation for value iteration
         -cd <float>, --convergence_delta <float>
             Convergence delta for value iteration
+        -lr <float>, --learning_rate <float>
+            Rate of learning for Reinforcement learning
     """
     # Initialize the parser
     parser = argparse.ArgumentParser()
